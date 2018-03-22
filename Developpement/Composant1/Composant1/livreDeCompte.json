@@ -1,0 +1,41 @@
+[{
+		"Identifiant": "0",
+		"NombreDeTransaction": 1,
+		"Hashes": {
+			"Hash": "5abfd75c7b93e0e948a5380ee908f79",
+			"BlocPrecedent": "5sds85abfac7b93e08a5380ee948a53802"
+		},
+		"DateDeCreation": "2018-02-15 12:00:00",
+		"Version": "0x2000",
+		"Transactions": [{
+				"Id": "1",
+				"date": "2018-02-15 12 :00 :00",
+				"Bloc": "1",
+				"ID_init": "0",
+				"ID_recev": "1",
+				"montant": "100"
+			}
+
+		]
+	},
+	{
+		"Identifiant": "1",
+		"NombreDeTransaction": 1,
+		"Hashes": {
+			"Hash": "5abfd75c7b93e0e948a5380ee908f81",
+			"BlocPrecedent": "5abfd75c7b93e0e948a5380ee908f79"
+		},
+		"DateDeCreation": "2018-02-15 12:00:00",
+		"Version": "0x2000",
+		"Transactions": [{
+				"Id": "1",
+				"date": "2018-02-15 12 :00 :00",
+				"Bloc": "1",
+				"ID_init": "0",
+				"ID_recev": "1",
+				"montant": "100"
+			}
+
+		]
+	}
+]
