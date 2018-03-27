@@ -3,7 +3,7 @@
 #include <fstream>
 #include <stdio.h>
 
-#include "../../../Interface Fichier/FileInterfaceAPI.h"
+#include "FileInterfaceAPI.h"
 
 using namespace std;
 
@@ -68,11 +68,9 @@ void FileInterface::insert(Bloc bloc)
 	jsonObjects.emplace_back(js);
 	std::ofstream o("output.json");
 	o << std::setw(4) << jsonObjects << std::endl;
-
 }
 
-string FileInterface::toString(bool allInfos, string hash)
-{
+string FileInterface::toString(bool allInfos, string hash) {
 	std::time_t rawtime;
 	std::tm* timeinfo;
 	char buffer[80];
@@ -109,12 +107,10 @@ string FileInterface::toString(bool allInfos, string hash)
 	}
 
 	str += "]";
-
 	return str;
 }
 
-string FileInterface::toString(bool allInfos, int index)
-{
+string FileInterface::toString(bool allInfos, int index) {
 	std::time_t rawtime;
 	std::tm* timeinfo;
 	char buffer[80];
@@ -158,14 +154,15 @@ string FileInterface::toString(bool allInfos, int index)
 
 // Parcours tous les blocs afin de savoir s'ils sont conformes - génére une exception si un n'est pas conforme
 void FileInterface::verification() {
+	cout << "test2" << endl;
 	vector<Bloc> liste_blocs = readAll(); // transforme le fichier en un vecteur de Bloc
 	for (vector<Bloc>::iterator it = liste_blocs.begin(); it != liste_blocs.end(); ++it) {
 		Bloc bloc = *it;
 		cout << "Bloc : " << bloc.num << endl;
-		/*// on parcours la liste et on appelle la methode verification bloc du composant5
-		if (!verify_bloc(bloc)) { // tester car methode verify_bloc attend un Bloc*
-			throw new string("erreur lors de la verification d'un bloc");
-		}*/
+		// on parcours la liste et on appelle la methode verification bloc du composant5
+		//if (!verify_bloc(bloc)) { // tester car methode verify_bloc attend un Bloc*
+			//throw new string("erreur lors de la verification d'un bloc");
+		//}
 	}
 	cout << "verification successful." << endl;
 }
@@ -173,76 +170,96 @@ void FileInterface::verification() {
 //Reçoit un file path et retourne un vector contenant tous les blocs
 vector<Bloc> FileInterface::readAll() {
 	vector<Bloc> liste_blocs;
-	ifstream ifs(fichier); // lit le fichier
-	json j = json::parse(ifs); // transforme en json
-	// parcours le tableau json contenant les blocs
-	for (const auto& it : j) {
-		Bloc b;
-		//recuperation transactions
-		vector<json> transactions = it["Transactions"];
-		TX transaction;
-		UTXO utxo;
-		TXI txi;
-		int nUTXO = 0; // compte le nombre de utxo 
-		int nUTXI = 0; // compte le nombre de txi 
-		for (auto i : transactions) {
-			// si l'utilisateur est l'emetteur de la transaction (TXO)
-			if (i.at("ID_init") == it["Identifiant"]) {
-				//recuperation des valeurs json en string
-				string bloc = i.at("Bloc");
-				string id = i.at("Id");
-				string montant = i.at("montant");
-				//cast des valeurs en int ou float
-				utxo.nBloc = stoi(bloc);
-				utxo.nTx = stoi(id);
-				utxo.nUTX0 = ++nUTXO;
-				utxo.montant = strtof(montant.c_str(), 0);
-				// recuperation compte destinataire (clé publique) 
-				for (const auto& temp : j) {
-					if (temp["Identifiant"] == i.at("ID_recev")) {
-						json hashes = it["Hashes"];
-						string hash_temp = hashes.at("Hash");
-						copy(hash_temp.begin(), hash_temp.end(), utxo.dest);
-						utxo.dest[hash_temp.length()] = 0;
-					}
-				}
-				//TO - DO : unsigned char hash[HASH_SIZE]; hash(nBloc,nTx,nUTXO,montant,destinataire) pour securisation de l'UTXO
-
-				transaction.UTXOs.push_back(utxo);
-
-			} // si l'utilisateur est le destinataire de la transaction (TXI)
-			else if (i.at("ID_recev") == it["Identifiant"]) {
-				cout << i.at("ID_recev") << endl;
+	json j;
+	try	{
+		// parsing input with a syntax error
+		ifstream ifs(fichier); // lit le fichier
+		j = json::parse(ifs); // transforme en json
+	
+		// parcours le tableau json contenant les blocs
+		for (const auto& it : j) {
+			Bloc b;
+			//recuperation transactions
+			/*************************************************TODO******************************************************************/
+			//recuperer json de it["TX]
+			//lire dans un vector<json> chaque txi et txo
+			// lire les transactions du mineures et ajouter dans utxo
+			json transactions = it["TX"];
+			UTXO utxo;
+			TXI txi;
+			//recuperation txi et utxo
+			for (const auto& i : transactions.at("TXI")) {
+				cout << i.at("nTx") << endl;
 				// block number and id of the source Utxo
-				string bloc = i.at("Bloc");
-				string id = i.at("Id");
+				string nTx = i.at("nTx");
+				string bloc = i.at("nBloc");
+				string nUTXO = i.at("nUTXO");
+				string signature = i.at("signature");
 				//cast des valeurs en int ou float
 				txi.nBloc = stoi(bloc);
-				txi.nTx = stoi(id);
-				//index of transaction précédente (a verifier)
-				txi.nUtxo = ++nUTXI;
-				//TO - DO : unsigned char signature[64];  signature de la transaction avec la clé privée
-
-				transaction.TXIs.push_back(txi);
+				txi.nTx = stoi(nTx);
+				txi.nUtxo = stoi(nUTXO);
+				copy(signature.begin(), signature.end(), txi.signature);
+				txi.signature[signature.length()] = 0;
+				//ajout d'un txi
+				b.tx1.TXIs.push_back(txi);
 			}
+			for (const auto& i : transactions.at("UTXO")) {
+				cout << i.at("nTx") << endl; 
+				// block number and id of the source Utxo
+				string nTx = i.at("nTx");
+				string bloc = i.at("nBloc");
+				string nUTXO = i.at("nUTXO");
+				string montant = i.at("montant"); 
+				utxo.nBloc = stoi(bloc);
+				utxo.nTx = stoi(nTx);
+				utxo.nUTX0 = stoi(nUTXO);
+				utxo.montant = strtof(montant.c_str(), 0); 
+				string dest = i.at("cle_publique");
+				copy(dest.begin(), dest.end(), utxo.dest);
+				utxo.dest[dest.length()] = 0;
+				string hash = i.at("hash");
+				copy(hash.begin(), hash.end(), utxo.hash);
+				utxo.hash[hash.length()] = 0;
+				//ajout d'un txo
+				b.tx1.UTXOs.push_back(utxo);
+			}
+			//recuperation tx0
+			json txm = it["TXM"];
+			b.tx0.utxo[0].nTx = 0; // il n'y a qu'une seule transaction pour le mineur
+			string nUTXO = txm.at("nUTXO");
+			b.tx0.utxo[0].nUTX0 = stoi(nUTXO);
+			string nBloc = txm.at("nBloc");
+			b.tx0.utxo[0].nBloc = stoi(nBloc);
+			string montant = txm.at("montant");
+			b.tx0.utxo[0].montant = strtof(montant.c_str(), 0);
+			string cle = txm.at("cle_publique");
+			cout << "test3" << endl;
+			copy(cle.begin(), cle.end(), b.tx0.utxo[0].dest);
+			b.tx0.utxo[0].dest[cle.length()] = 0;
+			string hash = txm.at("hash");
+			copy(hash.begin(), hash.end(), b.tx0.utxo[0].hash);
+			b.tx0.utxo[0].hash[hash.length()] = 0;
+
+			//recuperation hash et hash du précedent
+			string hashBloc = it["hash"];
+			string hashBlocPrecedent = it["previous_hash"];
+			strncpy_s(b.hash, HASH_SIZE, hashBloc.c_str(), HASH_SIZE);
+			strncpy_s(b.previous_hash, HASH_SIZE, hashBlocPrecedent.c_str(), HASH_SIZE);
+			//numeroBloc
+			string numbloc = it["num"];
+			b.num = stoi(numbloc);
+			string nonce = it["nonce"];
+			b.nonce = stoi(nonce);
+			//on ajoute le bloc a liste_blocs 
+			liste_blocs.push_back(b);
 		}
-		//ajouter les transactions TXI et UTXO au bloc
-		b.tx1 = transaction;
-
-		//recuperation hashes
-		json hashes = it["Hashes"];
-		cout << hashes.at("Hash") << endl;
-		string hash = hashes.at("Hash");
-		string hashBlocPrecedent = hashes.at("BlocPrecedent");
-		strncpy_s(b.hash, HASH_SIZE, hash.c_str(), HASH_SIZE);
-		strncpy_s(b.previous_hash, HASH_SIZE, hashBlocPrecedent.c_str(), HASH_SIZE);
-		//numeroBloc
-		string numbloc = it["Identifiant"];
-		b.num = stoi(numbloc);
-		//TO-DO: transactions_coin_base
-
-		//on ajoute le bloc a liste_blocs 
-		liste_blocs.push_back(b);
+	}
+	catch (json::parse_error& e) {
+		// output exception information
+		cout << "message: " << e.what() << '\n'
+			<< "exception id: " << e.id << '\n'
+			<< "byte position of error: " << e.byte << endl;
 	}
 	return liste_blocs;
 }
