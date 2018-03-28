@@ -10,6 +10,14 @@ class FileInterface {
 private:
 	std::string fichier;
 
+	void to_json(json& _j,TXI& txi);
+	void to_json(json& _j, UTXO& utxo);
+	void to_json(json& _j, TX& tx);
+	void to_json(json & _j, Bloc & _x);
+	void from_json(json & _j, UTXO & _x);
+	void from_json(json & _j, TX & _x);
+	void from_json(json & _j, Bloc & _x);
+
 public:
 	// Constructeur : initialisation la classe et lit le fichier json passé en paramètre
 	FileInterface(string fichier);

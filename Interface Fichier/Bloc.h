@@ -32,7 +32,7 @@ class UTXO // une sortie non dépensée
   unsigned char dest[KEY_SIZE];  //	compte destinataire (clé publique)
   unsigned char hash[HASH_SIZE];    // hash(nBloc,nTx,nUTXO,montant,destinataire) pour securisation de l'UTXO
 
-  std::string ToString();    // serialisation (necessaire au hash)
+  std::string toString();
 };
 
 class TX { // transaction standard (many inputs, many outputs)
@@ -57,7 +57,7 @@ class Bloc
 	TX tx1; //  transaction du bloc
 	TXM tx0; // transaction du mineur (coinbase)
 
-	std::string ToString();
+	std::string toString();
 };
 
 #endif
