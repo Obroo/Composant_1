@@ -21,12 +21,10 @@ FileInterface::FileInterface(string file_path) {
 }
 
 void FileInterface::insert(Bloc bloc) {
-	//On utilise le composant_5 pour vérifier si le bloc respecte les spécifications
-	//Faut-il vérifier les transactions ou pas?
-	/*CComposant5 c5;
-	bool ans = c5.verify_bloc(bloc);
-	if (ans == false) {
-	throw std::invalid_argument("The bloc did not respect the specifications.");
+	/*Composant5 c5();
+	bool result = c5.verify_bloc(bloc, bloc.hash, bloc.nonce);
+	if (result == false) {
+		throw std::invalid_argument("The bloc did not respect the specifications.");
 	}*/
 	ifstream ifs(fichier); // lit le fichier
 	json j = json::parse(ifs); // transforme en json
@@ -161,21 +159,20 @@ string FileInterface::toString(bool allInfos, int index) {
 	str += "\",\n\t\"hash\": \"" + string(b.tx0.utxo[0].hash, b.tx0.utxo[0].hash + sizeof b.tx0.utxo[0].hash / b.tx0.utxo[0].hash[0]) + "\"\n\t}\n}";
 
 	return str;
-	
 }
 
 
 // Parcours tous les blocs afin de savoir s'ils sont conformes - génére une exception si un n'est pas conforme
 void FileInterface::verification() {
-	cout << "test2" << endl;
+	//Composant5 c5;
 	vector<Bloc> liste_blocs = readAll(); // transforme le fichier en un vecteur de Bloc
 	for (vector<Bloc>::iterator it = liste_blocs.begin(); it != liste_blocs.end(); ++it) {
 		Bloc bloc = *it;
-		cout << "Bloc : " << bloc.num << endl;
+		cout << " verification du Bloc : " << bloc.num << endl;
 		// on parcours la liste et on appelle la methode verification bloc du composant5
-		//if (!verify_bloc(bloc)) { // tester car methode verify_bloc attend un Bloc*
-			//throw new string("erreur lors de la verification d'un bloc");
-		//}
+		/*if (!c5.verify_bloc(bloc, bloc.hash, bloc.nonce)) { // tester car methode verify_bloc attend un Bloc*
+			throw new string("erreur lors de la verification d'un bloc");
+		}*/
 	}
 	cout << "verification successful." << endl;
 }
@@ -192,17 +189,22 @@ vector<Bloc> FileInterface::readAll() {
 		// parcours le tableau json contenant les blocs
 		for (const auto& it : j) {
 			Bloc b;
+			//recuperation hash et hash du précedent
+			string hashBloc = it["hash"];
+			string hashBlocPrecedent = it["previous_hash"];
+			strncpy_s(b.hash, HASH_SIZE, hashBloc.c_str(), HASH_SIZE);
+			strncpy_s(b.previous_hash, HASH_SIZE, hashBlocPrecedent.c_str(), HASH_SIZE);
+			//numeroBloc
+			string numbloc = it["num"];
+			b.num = stoi(numbloc);
+			string nonce = it["nonce"];
+			b.nonce = stoi(nonce);
 			//recuperation transactions
-			/*************************************************TODO******************************************************************/
-			//recuperer json de it["TX]
-			//lire dans un vector<json> chaque txi et txo
-			// lire les transactions du mineures et ajouter dans utxo
 			json transactions = it["TX"];
 			UTXO utxo;
 			TXI txi;
 			//recuperation txi et utxo
 			for (const auto& i : transactions.at("TXI")) {
-				cout << i.at("nTx") << endl;
 				// block number and id of the source Utxo
 				string nTx = i.at("nTx");
 				string bloc = i.at("nBloc");
@@ -218,7 +220,6 @@ vector<Bloc> FileInterface::readAll() {
 				b.tx1.TXIs.push_back(txi);
 			}
 			for (const auto& i : transactions.at("UTXO")) {
-				cout << i.at("nTx") << endl; 
 				// block number and id of the source Utxo
 				string nTx = i.at("nTx");
 				string bloc = i.at("nBloc");
@@ -252,17 +253,6 @@ vector<Bloc> FileInterface::readAll() {
 			string hash = txm.at("hash");
 			copy(hash.begin(), hash.end(), b.tx0.utxo[0].hash);
 			b.tx0.utxo[0].hash[hash.length()] = 0;
-
-			//recuperation hash et hash du précedent
-			string hashBloc = it["hash"];
-			string hashBlocPrecedent = it["previous_hash"];
-			strncpy_s(b.hash, HASH_SIZE, hashBloc.c_str(), HASH_SIZE);
-			strncpy_s(b.previous_hash, HASH_SIZE, hashBlocPrecedent.c_str(), HASH_SIZE);
-			//numeroBloc
-			string numbloc = it["num"];
-			b.num = stoi(numbloc);
-			string nonce = it["nonce"];
-			b.nonce = stoi(nonce);
 			//on ajoute le bloc a liste_blocs 
 			liste_blocs.push_back(b);
 		}
@@ -281,7 +271,7 @@ Bloc FileInterface::findByHash(string hash) {
 	for (vector<Bloc>::iterator i = ensembleBlocsBlockchain.begin(); i != ensembleBlocsBlockchain.end(); i++)	{
 		Bloc bloc = *i;
 		if (bloc.hash == hash){
-			cout << "Bloc :" << bloc.num << endl;	//Renvoyer le bloc en question à partir de la liste de tous les block
+			cout << "FindByHash : Bloc " << bloc.num << " found." << endl;	//Renvoyer le bloc en question à partir de la liste de tous les block
 			return bloc;
 		}
 	}
@@ -293,7 +283,7 @@ Bloc FileInterface::findByIndex(int index) {
 	for (vector<Bloc>::iterator i = ensembleBlocsBlockchain.begin(); i != ensembleBlocsBlockchain.end(); i++) {
 		Bloc bloc = *i;
 		if (bloc.num == index) {
-			cout << "Bloc :" << bloc.num << endl;		//Renvoyer le bloc en question à partir de la liste de tous les block
+			cout << "FindByIndex : Bloc " << bloc.num <<" found."<< endl;		//Renvoyer le bloc en question à partir de la liste de tous les block
 			return bloc;
 		}
 	}

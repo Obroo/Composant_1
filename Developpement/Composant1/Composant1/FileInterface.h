@@ -12,13 +12,14 @@
 
 #include "json.hpp"
 #include "Bloc.h"
+//#include "Composant5.h"
 
 using namespace std;
 using json = nlohmann::json;
 
-class FileInterface {
+class FILEINTERFACE_INTERFACE FileInterface {
 private:
-	std::string fichier;
+	string fichier;
 public:
 	// Constructeur : initialisation la classe et lit le fichier json passé en paramètre
 	FileInterface(string fichier);
@@ -42,7 +43,6 @@ public:
 
 	string toString(bool allInfos, string hash);
 	string toString(bool allInfos,  int index);
-
 };
 
 #endif
