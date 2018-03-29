@@ -69,7 +69,7 @@ string FileInterface::toString(bool allInfos, string hash) {
 	Bloc b = findByHash(hash);
 	string str ="{";
 	if (allInfos == true) {
-		str = "\n\t\"hash\": \"" + string(b.hash);
+		str += "\n\t\"hash\": \"" + string(b.hash);
 		str += "\",\n\t\"nonce\": \"" + to_string(b.nonce) + "\",";
 	} 
 	str += "\n\t\"previous_hash\": \"" + string(b.previous_hash);
@@ -115,9 +115,9 @@ string FileInterface::toString(bool allInfos, string hash) {
 
 string FileInterface::toString(bool allInfos, int index) {
 	Bloc b = findByIndex(index);
-	string str;
+	string str ="{";
 	if (allInfos == true) {
-		str = "\n\t\"hash\": \"" + string(b.hash);
+		str += "\n\t\"hash\": \"" + string(b.hash);
 		str += "\",\n\t\"nonce\": \"" + to_string(b.nonce) + "\",";
 	}
 	str += "\n\t\"previous_hash\": \"" + string(b.previous_hash);
