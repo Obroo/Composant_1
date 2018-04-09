@@ -1,0 +1,9 @@
+﻿  main.cpp
+c:\z_programmation_par_composants\composant_1\developpement\composant1\composant1\fileinterface.h(21): warning C4251: 'FileInterface::fichier': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'FileInterface'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+  Generating code
+  All 195 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Test_1.vcxproj -> C:\Z_Programmation_par_composants\Composant_1\Developpement\Composant1\x64\Release\Test_1.exe
+  Test_1.vcxproj -> C:\Z_Programmation_par_composants\Composant_1\Developpement\Composant1\x64\Release\Test_1.pdb (Full PDB)
