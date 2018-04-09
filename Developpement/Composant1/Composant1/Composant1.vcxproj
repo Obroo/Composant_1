@@ -88,13 +88,15 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FILEINTERFACE_EXPORTS;WIN32;_WINDOWS;_DEBUG;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Composant5;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <PrecompiledHeader />
     </ClCompile>
     <Link />
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>composant5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,12 +104,13 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FILEINTERFACE_EXPORTS;WIN32;_WINDOWS;_DEBUG;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Composant5;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <PrecompiledHeader />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>composant5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,14 +120,16 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FILEINTERFACE_EXPORTS;WIN32;_WINDOWS;_DEBUG;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Composant5;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <PrecompiledHeader />
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>composant5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,18 +139,25 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FILEINTERFACE_EXPORTS;WIN32;_WINDOWS;_DEBUG;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)includes</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Composant5;$(SolutionDir)includes</AdditionalIncludeDirectories>
       <PrecompiledHeader />
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>composant5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FileInterface.cpp" />
+    <ClCompile Include="FileInterface.cpp">
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileInterface.h" />

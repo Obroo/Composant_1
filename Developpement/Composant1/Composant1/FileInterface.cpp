@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "FileInterface.h"
+#include "Composant5.h"
 
 using namespace std;
 
@@ -21,11 +22,11 @@ FileInterface::FileInterface(string file_path) {
 }
 
 void FileInterface::insert(Bloc bloc) {
-	/*Composant5 c5();
+	CComposant5 c5;
 	bool result = c5.verify_bloc(bloc, bloc.hash, bloc.nonce);
 	if (result == false) {
 		throw std::invalid_argument("The bloc did not respect the specifications.");
-	}*/
+	}
 	ifstream ifs(fichier); // lit le fichier
 	json j = json::parse(ifs); // transforme en json
 	auto jsonObjects = json::array();

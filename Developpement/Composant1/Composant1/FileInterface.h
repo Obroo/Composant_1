@@ -12,7 +12,6 @@
 
 #include "json.hpp"
 #include "Bloc.h"
-//#include "Composant5.h"
 
 using namespace std;
 using json = nlohmann::json;
