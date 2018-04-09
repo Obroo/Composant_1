@@ -1,0 +1,100 @@
+[
+    {
+        "TX": {
+            "TXI": [
+                {
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2",
+                    "signature": "az1"
+                }
+            ],
+            "UTXO": [
+                {
+                    "cle_publique": "az1",
+                    "hash": "az1",
+                    "montant": "100",
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2"
+                }
+            ]
+        },
+        "TXM": {
+            "cle_publique": "az1",
+            "hash": "az1",
+            "montant": "5",
+            "nBloc": "1",
+            "nUTXO": "2"
+        },
+        "hash": "azfdghsdffgfdgbsfdhsd1",
+        "nonce": "0",
+        "num": "1",
+        "previous_hash": "az2"
+    },
+    {
+        "TX": {
+            "TXI": [
+                {
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2",
+                    "signature": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382"
+                }
+            ],
+            "UTXO": [
+                {
+                    "cle_publique": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382",
+                    "hash": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382",
+                    "montant": "100",
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2"
+                }
+            ]
+        },
+        "TXM": {
+            "cle_publique": "az1",
+            "hash": "az1",
+            "montant": "5",
+            "nBloc": "1",
+            "nUTXO": "2"
+        },
+        "hash": "az1",
+        "nonce": "0",
+        "num": "2",
+        "previous_hash": "az2"
+    },
+    {
+        "TX": {
+            "TXI": [
+                {
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2",
+                    "signature": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382\u0000"
+                }
+            ],
+            "UTXO": [
+                {
+                    "cle_publique": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382\u0000",
+                    "hash": "5sds85ab85abfac7b93e08a5380ee948a53802fac7b93e08a5380ee948a5382\u0000",
+                    "montant": "100.000000",
+                    "nBloc": "1",
+                    "nTx": "3",
+                    "nUTXO": "2"
+                }
+            ]
+        },
+        "TXM": {
+            "cle_publique": "az1\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+            "montant": "5.000000",
+            "nBloc": "",
+            "nUTXO": "2"
+        },
+        "hash": "az1",
+        "nonce": "0",
+        "num": "2",
+        "previous_hash": "az2"
+    }
+]
